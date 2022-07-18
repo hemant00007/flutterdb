@@ -64,4 +64,8 @@ class DBHelper {
     print(employees.length);
     return employees;
   }
+  deletetable() async {
+    var dbClient = await db;
+    dbClient?.delete("Employee");
+  }
 }

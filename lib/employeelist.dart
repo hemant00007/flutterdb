@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:offline/model/employee.dart';
 import 'dart:async';
@@ -19,11 +21,11 @@ class MyEmployeeList extends StatefulWidget {
 class MyEmployeeListPageState extends State<MyEmployeeList> {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       appBar: new AppBar(
         title: new Text('Employee List'),
       ),
-      body: new Container(
+      body: Container(
         padding: new EdgeInsets.all(16.0),
         child: new FutureBuilder<List<Employee>>(
           future: fetchEmployeesFromDatabase(),
@@ -35,12 +37,83 @@ class MyEmployeeListPageState extends State<MyEmployeeList> {
                     return new Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          new Text(snapshot.data![index].firstName!,
-                              style: new TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18.0)),
-                          new Text(snapshot.data![index].lastName!,
-                              style: new TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14.0)),
+
+
+                            Container(
+                              width:MediaQuery.of(context).size.width,
+                            color: Colors.white10,
+                            child:  Row(
+                                children: [
+                                   Row(
+                                     children: [
+                                       Container(
+                                        child: Image.file(File(snapshot.data![index].firstName!),
+                                          fit: BoxFit.fill,
+                                          width: 80,
+                                          height: 80,
+                                        ),
+                                  ),
+                                       SizedBox(width: 10),
+                                       Container(
+                                         child: Image.file(File(snapshot.data![index].lastName!),
+                                           fit: BoxFit.fill,
+                                           width: 80,
+                                           height: 80,
+                                         ),
+                                       ),
+
+                                      Container(
+
+                                        width: 160,
+                                        height: 80,
+                                        child: Column(
+                                           children: [
+                                             new Text(snapshot.data![index].mobileNo!,
+                                                 style: new TextStyle(
+                                                     fontWeight: FontWeight.bold, fontSize: 14.0)),
+
+
+                                           ],
+                                         ),
+                                      ),
+
+                                       GestureDetector(
+                                         onTap: (){
+                                           var dbHelper = DBHelper();
+                                           dbHelper.deletetable();
+                                           setState(() {
+
+                                           });
+
+                                             },
+
+                                         child: Container(
+
+                                           width: 40,
+                                           height: 80,
+                                           child: Image(
+                                                image: AssetImage(
+                                                    'assets/delete.png'
+                                           ),
+
+                                         ),
+                                         ),
+                                       ),
+
+                                     ],
+                                   ),
+
+                                ],
+                              ),
+                    ),
+
+
+
+                          
+                          // new Text(snapshot.data![index].firstName!,
+                          //     style: new TextStyle(
+                          //         fontWeight: FontWeight.bold, fontSize: 18.0)),
+
                           new Divider()
                         ]);
                   });
